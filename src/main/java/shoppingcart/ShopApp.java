@@ -1,19 +1,35 @@
 package shoppingcart;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.util.Scanner;
 
 public class ShopApp {
 
 	public static void main(String[] args) {
 		Cart cart = new Cart();
-		Item item1 = new Item("trousers", 34.50, 2);
-		Item item2 = new Item("jeans", 12.40, 3);
-		Item item3 = new Item("top", 9.99, 4);
-		Item item4 = new Item("shoes", 45.89, 1);
-		Item item5 = new Item("skirt", 10.99, 5);
-		cart.addItem(item1);
-		ArrayList<String> shoppingItems = new ArrayList<String>();
-		
+		DecimalFormat df = new DecimalFormat("#.##");
+		Scanner input = new Scanner(System.in);
+		String choice = "y";
+		while (choice.equalsIgnoreCase("y")) {
+			System.out.println("Enter the name of the item: ");
+			String myItemName = input.next();
+
+			System.out.println("Enter the unit price: ");
+			double myItemPrice = input.nextDouble();
+
+			System.out.println("Enter the quantity: ");
+			int myItemQty = input.nextInt();
+
+			cart.addItem(new Item(myItemName, myItemPrice, myItemQty));
+			System.out.println("Current Cart");
+			for (Item item : cart.getItems()) {
+				System.out.println(item.toString());
+			}
+			System.out.println("Total cost: $" + df.format(cart.checkout()));
+			System.out.println("Continue shopping (y/n)");
+			input.next(choice);
+		}
+		input.close();
 	}
 
 }
